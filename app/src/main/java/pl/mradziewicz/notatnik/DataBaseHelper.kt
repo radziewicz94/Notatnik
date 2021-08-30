@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 
 object TableInfo : BaseColumns {
-    const val TABLE_NAME = "My_notes"
+    const val TABLE_NAME = "notes"
     const val TABLE_COLUMN_TITLE = "title"
     const val TABLE_COLUMN_MESSAGE = "message"
 }
@@ -14,7 +14,8 @@ object TableInfo : BaseColumns {
         object BasicComamnd{
             const val SQL_CREATE_TABLE =
                 "CREATE TABLE ${TableInfo.TABLE_NAME} (" +
-                        "${TableInfo.TABLE_COLUMN_TITLE} INTEGER PRIMARY KEY," +
+                        "${BaseColumns._ID} INTEGER PRIMARY KEY," +
+                        "${TableInfo.TABLE_COLUMN_TITLE} TEXT," +
                         "${TableInfo.TABLE_COLUMN_MESSAGE} TEXT)"
 
             const val SQL_DELETE_TABLE = " DROP TABLE IF EXSISTS ${TableInfo.TABLE_NAME}"
