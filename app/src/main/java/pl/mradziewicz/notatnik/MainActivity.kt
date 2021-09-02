@@ -11,12 +11,13 @@ import pl.mradziewicz.notatnik.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val dataBaseHelper = DataBaseHelper(applicationContext)
-        val db = dataBaseHelper.writableDatabase
+
 
 
     }
@@ -30,8 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val dataBaseHelper = DataBaseHelper(applicationContext)
+        val db = dataBaseHelper.writableDatabase
 
         binding.recyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
-        binding.recyclerView.adapter = CardViewAdapter(applicationContext)
+        binding.recyclerView.adapter = CardViewAdapter(applicationContext, db)
     }
 }
