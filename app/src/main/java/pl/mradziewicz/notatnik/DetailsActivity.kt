@@ -6,35 +6,49 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.BaseColumns
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import pl.mradziewicz.notatnik.databinding.ActivityDetailsBinding
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dbhelper = DataBaseHelper(applicationContext)
-        val db = dbhelper.writableDatabase
-
-       /* val title = intent.getStringExtra("title")
-        val message = intent.getStringExtra("message")*/
         binding.titleEditText.setText(intent.getStringExtra("title"))
         binding.messageDetailsEditText.setText(intent.getStringExtra("message"))
-        //val test = intent.getStringExtra("title")
 
 
-        binding.saveButton.setOnClickListener {
+//        binding.saveButton.setOnClickListener {
+//
+//
+//        }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_details_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val dbhelper = DataBaseHelper(applicationContext)
+        val db = dbhelper.writableDatabase
+        if(item.itemId == R.id.save_menu){
+            Toast.makeText(applicationContext, "Notatka zapisana", Toast.LENGTH_SHORT).show()
             if (intent.hasExtra("ID")) {
                 updateCardView(db)
             } else {
                 enterNewCardView(db)
             }
         }
+        db.close()
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun enterNewCardView(db: SQLiteDatabase) {
@@ -57,6 +71,7 @@ class DetailsActivity : AppCompatActivity() {
                 "Tytuł i Treśc są puste, nie mam co zapisać", Toast.LENGTH_SHORT
             ).show()
         }
+        db.close()
     }
 
     private fun updateCardView(db: SQLiteDatabase) {

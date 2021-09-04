@@ -44,11 +44,16 @@ class CardViewAdapter(val context: Context, val db: SQLiteDatabase) :
         }
 
         holder.card_view.setOnLongClickListener(View.OnLongClickListener {
-            Toast.makeText(context, "Skopiowane do schowka", Toast.LENGTH_SHORT).show()
-            val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText("CopyText", "Title: "
-                    + holder.title_textView.text + "\nMessage : ${holder.message_textView.text}")
-            cm.setPrimaryClip(clipData)
+//            Toast.makeText(context, "Skopiowane do schowka", Toast.LENGTH_SHORT).show()
+//            val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//            val clipData = ClipData.newPlainText("CopyText", "Title: "
+//                    + holder.title_textView.text + "\nMessage : ${holder.message_textView.text}")
+//            cm.setPrimaryClip(clipData)
+            val id = holder.adapterPosition.plus(1)
+            Toast.makeText(context, "karta została usunięta", Toast.LENGTH_SHORT)
+                .show()
+            db.delete(TableInfo.TABLE_NAME, BaseColumns._ID + "=?", arrayOf(id.toString()))
+            notifyItemRemoved(id)
             true
         })
 
