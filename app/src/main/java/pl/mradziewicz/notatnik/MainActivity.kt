@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import pl.mradziewicz.notatnik.databinding.ActivityMainBinding
+import pl.mradziewicz.notatnik.Note as Note
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -34,7 +35,21 @@ class MainActivity : AppCompatActivity() {
         val dataBaseHelper = DataBaseHelper(applicationContext)
         val db = dataBaseHelper.writableDatabase
 
+        val cursor = db.query(TableInfo.TABLE_NAME,null,null,null,null,null,null)
+        var notes = ArrayList<Note>()
+        if(cursor.count > 0){
+            cursor.moveToFirst()
+            while(!cursor.isAfterLast){
+                val note = Note()
+                note.id = cursor.getInt(0)
+                note.title = cursor.getString(1)
+                note.message = cursor.getString(2)
+                notes.add(note)
+                cursor.moveToNext()
+            }
+        }
+        cursor.close()
         binding.recyclerView.layoutManager = GridLayoutManager(applicationContext, 2)
-        binding.recyclerView.adapter = CardViewAdapter(applicationContext, db)
+        binding.recyclerView.adapter = CardViewAdapter(applicationContext, db, notes)
     }
 }

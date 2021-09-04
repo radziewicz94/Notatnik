@@ -28,6 +28,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:ems="10"
             android:gravity="clip_horizontal"
@@ -35,14 +36,5 @@
             android:inputType="textPersonName"
             android:text="" />
 
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:background="@color/dark_green"
-            android:gravity="center"
-            android:text="SAVE"
-            app:backgroundTint="@color/dark_green" />
     </LinearLayout>
 </LinearLayout>
