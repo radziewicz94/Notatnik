@@ -22,12 +22,6 @@ class DetailsActivity : AppCompatActivity() {
         binding.titleEditText.setText(intent.getStringExtra("title"))
         binding.messageDetailsEditText.setText(intent.getStringExtra("message"))
 
-
-//        binding.saveButton.setOnClickListener {
-//
-//
-//        }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -39,7 +33,6 @@ class DetailsActivity : AppCompatActivity() {
         val dbhelper = DataBaseHelper(applicationContext)
         val db = dbhelper.writableDatabase
         if(item.itemId == R.id.save_menu){
-            Toast.makeText(applicationContext, "Notatka zapisana", Toast.LENGTH_SHORT).show()
             if (intent.hasExtra("ID")) {
                 updateCardView(db)
             } else {
@@ -47,6 +40,7 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
         db.close()
+        onBackPressed()
 
         return super.onOptionsItemSelected(item)
     }
@@ -71,7 +65,6 @@ class DetailsActivity : AppCompatActivity() {
                 "Tytuł i Treśc są puste, nie mam co zapisać", Toast.LENGTH_SHORT
             ).show()
         }
-        db.close()
     }
 
     private fun updateCardView(db: SQLiteDatabase) {
@@ -85,7 +78,7 @@ class DetailsActivity : AppCompatActivity() {
         db.update(TableInfo.TABLE_NAME, value, BaseColumns._ID + "=?", arrayOf(id))
         Toast.makeText(
             applicationContext,
-            "Notatka została zapisana, możesz wyjść!",
+            "Notatka zaktualizowana, możesz wyjść!",
             Toast.LENGTH_LONG
         ).show()
     }
